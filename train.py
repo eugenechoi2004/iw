@@ -18,5 +18,10 @@ with open(args.config, 'r') as file:
 project_name = config['project']
 
 if config['env'] == "tree":
-    env = Tree
+    env = NaryTreeEnvironment(config['depth'], config['branching_factor'])
+
+if config['hyperbolic']:
+    
+else:
+
 

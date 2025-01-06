@@ -22,8 +22,7 @@ class NaryTreeEnvironment:
             branching_factor + 1: "stay",
         }
         self.state_dim = self.num_nodes
-        self.action_dim = self.branching_factor + 2
-        
+        self.action_dim = self.branching_factor + 2 
 
     def move_agent(self, action):
         direction = self.action_map[action]
@@ -180,6 +179,14 @@ class NaryTreeEnvironment:
             ax.imshow(plt.imread(io.BytesIO(png_data)))
             ax.axis('off')
     
+    def get_trajectories(self, num_trajectories):
+        trajectories = []
+        for trajectory in range(num_trajectories):
+            start, end = np.random.randint(0, self.num_nodes, size = 2)
+            trajectories.append(self.get_node_path(start, end))
+        return trajectories
+
+
 
 
 def main():
@@ -187,31 +194,32 @@ def main():
     Usage.
     """
     # Create a 2-ary tree environment with depth 4
-    env = NaryTreeEnvironment(depth=4, branching_factor=2)
+    env = NaryTreeEnvironment(depth=5, branching_factor=3)
+    trajs = env.get_trajectories(100)
 
-    # Choose two nodes
-    start_node = 12
-    end_node = 6
+    # # Choose two nodes
+    # start_node = 12
+    # end_node = 6
 
-    # Get the node path
-    node_path = env.get_node_path(start_node, end_node)
-    print(f"Node path from {start_node} to {end_node}: {node_path}")
+    # # Get the node path
+    # node_path = env.get_node_path(start_node, end_node)
+    # print(f"Node path from {start_node} to {end_node}: {node_path}")
 
-    # Get the action path
-    action_path = env.get_action_path(start_node, end_node)
-    actions = [x[1] for x in action_path][:-1]
-    print(actions)
+    # # Get the action path
+    # action_path = env.get_action_path(start_node, end_node)
+    # actions = [x[1] for x in action_path][:-1]
+    # print(actions)
 
-    print(f"Action path from {start_node} to {end_node}: {action_path}")
+    # print(f"Action path from {start_node} to {end_node}: {action_path}")
 
-    # Display the tree with highlighted path
-    env.agent_position = start_node
-    env.display(highlight_path=node_path)
+    # # Display the tree with highlighted path
+    # env.agent_position = start_node
+    # env.display(highlight_path=node_path)
 
-    for action in actions:
-        env.move_agent(action)
-        print(f"After action {action}:")
-        env.display(highlight_path=node_path)
+    # for action in actions:
+    #     env.move_agent(action)
+    #     print(f"After action {action}:")
+    #     env.display(highlight_path=node_path)
 
 
 if __name__ == "__main__":
